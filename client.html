@@ -19,21 +19,23 @@
 
   <div class="row vertical-center">
     <form  id="form"class="col-md-4">
-      <h1> File Merger <i data-feather="upload-cloud"></i></h1>
+      <h1 id="head"> File Merger <i data-feather="upload-cloud"></i></h1>
       <br/>
       <p>
-        <label class="sr-only" for=""> File 1</label>
+        <label class="sr-only" id="label1" for=""> File 1</label>
         <input class="form-control" type="file" id="fileInput"  autofocus multiple>
       </p>
       <p>
-        <label class="sr-only" for=""> File 2</label>
+        <label class="sr-only" id="label2" for=""> File 2</label>
         <input class="form-control" type="file"id="fileInput2"  autofocus multiple>
       </p>
-      <button class="btn btn-primary btn-block" id="uploadButton" type="sumbit">Upload</button>
       <div id="loader"></div>
       <br />
       <div id="message"></div>
       <div id="urlLink"></div>
+      <button class="btn btn-primary btn-block" id="uploadButton" type="sumbit">Upload</button>
+      <br />
+    
   
     </form>
   
@@ -54,8 +56,13 @@
      form.addEventListener("submit", function(e){
       e.preventDefault();
 
-      let fileElement = document.getElementById('fileInput')
-      let fileElement2 = document.getElementById('fileInput2')
+      let fileElement = document.getElementById('fileInput');
+      let fileElement2 = document.getElementById('fileInput2');
+      let label = document.getElementById("label1");
+      let label2 = document.getElementById("label2");
+      let Header = document.getElementById("head");
+
+         
 
       // check if user had selected a file
       if (fileElement.files.length === 0) {
@@ -65,6 +72,15 @@
       else if(fileElement2.files.length === 0){
         alert('please choose some files')
         return
+        
+      }
+      else{
+        fileElement.style.display="none"
+        fileElement2.style.display="none"
+        label.style.display="none"
+        label2.style.display="none"
+        Header.innerHTML = "Files Uploading"
+
       }
       
      
@@ -84,12 +100,23 @@
           );
           loader.innerHTML= "Upload process: " + percentCompleted + "%";
           console.log(`upload process: ${percentCompleted}%`);
+          button.style.display="none"
         }
       })
         .then(res => {
           console.log(res.data);
-          message.innerHTML = res.data.message
-         urlLink.innerHTML += "<a href='"+res.data.urls+"'>Download File</a>";
+          message.innerHTML = res.data.message + `<br />`+ "<a class='btn btn-success btn-lg'href='"+res.data.urls+"'>Download </a>";
+          // message.style.backgroundColor="white"
+          message.style.color="green";
+          message.style.textAlign="center"
+          message.style.padding="20px"
+          message.style.borderRadius="5px"
+          Header.innerHTML="Files Upload Complete"
+          button.style.display="none"
+          loader.style.display="none"
+
+        //  urlLink.innerHTML += "<a href='"+res.data.urls+"'>Download File</a>";
+   
           // console.log(res.data.url);
         
         })

@@ -31,7 +31,7 @@ router.post("/uploadFiles", upload.fields([{ name: "file" }]), (ctx) => {
     (file) => `http://localhost:${PORT}/${file.originalname}`
   );
   ctx.body = {
-    message: `Files saved on the server`,
+    message: ``, //message to client
     urls
   };
 });
