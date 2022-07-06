@@ -1,3 +1,13 @@
+.vertical-center {
+  background-color: rgb(36, 59, 79);
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
 #form-container{
    position: absolute;
     top: 50%;
@@ -9,10 +19,16 @@
     padding: 50px;
     background-color: darkcyan;
 }
+input{
+  display: flex;
+  flex-direction: column;
+}
 #uploadButton{
     cursor: pointer;
+    margin-top: 10%;
+    width: 100%;
     padding: 10px;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(22, 94, 161);
     border: none;
     color: white;
 }

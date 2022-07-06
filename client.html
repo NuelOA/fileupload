@@ -4,18 +4,39 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet"href="index.css">
   <title>Document</title>
+  <script src="https://unpkg.com/feather-icons"></script>
   <script src="	https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
 </head>
 
 <body>
-  <div id="form-container">
+
+
+
+  <div class="row vertical-center">
+    <form class="col-md-6">
+      <h1>Upload File <i data-feather="upload-cloud"></i></h1>
+      <br/>
+      <p>
+        <label class="sr-only" for=""> File 1</label>
+        <input class="form-control" type="file" id="fileInput" required autofocus multiple>
+      </p>
+      <p>
+        <label class="sr-only" for=""> Form 2</label>
+        <input class="form-control" type="file"id="fileInput2" required autofocus multiple>
+      </p>
+      <button class="btn btn-primary btn-block" id="uploadButton" type="sumbit">Upload</button>
+    </form>
+    </div>
+  <!-- <div id="form-container">
   <input type="file" id="fileInput" multiple>
   <input type="file" id="fileInput2" multiple>
   <button id="uploadButton">upload files</button>
-  <br/>
+  <br/> -->
 
   <div id="urlLink"></div>
 </div>
@@ -56,12 +77,19 @@
         }
       })
         .then(res => {
+         document.write(res.data.url)
           console.log(res.data)
           console.log(res.data.url)
         })
     }
 
   </script>
+
+
+
+<script>
+  feather.replace()
+</script>
 </body>
 
 </html>
