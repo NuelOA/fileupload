@@ -26,12 +26,12 @@ router.get("/", async (ctx) => {
   ctx.body = "Hello friends!";
 });
 
-router.post("/upload-multiple-files", upload.fields([{ name: "file" }]), (ctx) => {
+router.post("/uploadFiles", upload.fields([{ name: "file" }]), (ctx) => {
   let urls = ctx.files.file.map(
     (file) => `http://localhost:${PORT}/${file.originalname}`
   );
   ctx.body = {
-    message: `files have saved on the server`,
+    message: `Files saved on the server`,
     urls
   };
 });

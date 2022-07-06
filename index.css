@@ -6,9 +6,16 @@
   align-items: center;
   min-height: 100vh;
 }
+#loader{
+  margin-top: 20%;
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
 
-#form-container{
+/* #form-container{
    position: absolute;
     top: 50%;
    left: 25%;
@@ -18,7 +25,7 @@
     align-items: center;
     padding: 50px;
     background-color: darkcyan;
-}
+} */
 input{
   display: flex;
   flex-direction: column;
@@ -31,6 +38,10 @@ input{
     background-color: rgb(22, 94, 161);
     border: none;
     color: white;
+}
+h1{
+  text-align: center;
+  justify-content: center;
 }
 #btnupload:hover{
     background-color: rgb(46, 46, 46);
