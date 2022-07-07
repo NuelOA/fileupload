@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet"href="index.css">
-  <title>Document</title>
-  <script src="https://unpkg.com/feather-icons"></script>
-  <script src="	https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
-</head>
-
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- CSS only -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"href="index.css">
+        <title>Document</title>
+        <script src="https://unpkg.com/feather-icons"></script>
+        <script src="	https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+    </head>
 
 
-
+    <body>
   <div class="row vertical-center">
     <form  id="form"class="col-md-4">
       <h1 id="head"> File Merger <i data-feather="upload-cloud"></i></h1>
@@ -42,8 +39,8 @@
     </div>
 
 
-
-</div>
+    </body>
+    
 
 
   <script>
@@ -79,7 +76,7 @@
         fileElement2.style.display="none"
         label.style.display="none"
         label2.style.display="none"
-        Header.innerHTML = "Files Uploading"
+        Header.innerHTML = "Files Uploading..." 
 
       }
       
@@ -87,10 +84,17 @@
 
 
       let files = Array.from(fileElement.files)
+      let file2 = Array.from(fileElement2.files)
+  console.log(file2)
 
       let formData = new FormData();
+
       files.forEach(file => {
         formData.append('file', file);
+      })
+
+      file2.forEach(file=>{
+        formData.append('file', file)
       })
       
       axios.post("http://localhost:3002/uploadFiles", formData, {
@@ -100,7 +104,6 @@
           );
           loader.innerHTML= "Upload process: " + percentCompleted + "%";
           console.log(`upload process: ${percentCompleted}%`);
-          button.style.display="none"
         }
       })
         .then(res => {
@@ -117,7 +120,8 @@
 
         //  urlLink.innerHTML += "<a href='"+res.data.urls+"'>Download File</a>";
    
-          // console.log(res.data.url);
+         
+          console.log(res.data.urls);
         
         })
       }) 
@@ -133,6 +137,7 @@
 <script>
   feather.replace()
 </script>
-</body>
 
 </html>
+
+
