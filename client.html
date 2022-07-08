@@ -20,17 +20,23 @@
       <br/>
       <p>
         <label class="sr-only" id="label1" for=""> File 1</label>
-        <input class="form-control" type="file" id="fileInput"  autofocus multiple>
+        <input class="form-control" type="file" id="fileInput"  autofocus multiple  accept="text/plain">
       </p>
       <p>
         <label class="sr-only" id="label2" for=""> File 2</label>
-        <input class="form-control" type="file"id="fileInput2"  autofocus multiple>
+        <input class="form-control" type="file"id="fileInput2"  autofocus multiple  accept="text/plain">
       </p>
-      <div id="loader"></div>
+     <!--check box-->
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="checkSwitch"><span class="form-check-label" for="flexSwitchCheckDefault" id="label"><small>Start merge on new paragraph</small></span>
+      </div>
+      <div id="loader"><img src="https://cdn.dribbble.com/users/807926/screenshots/3629667/loadingtwo.gif" /></div>
       <br />
       <div id="message"></div>
       <div id="urlLink"></div>
       <button class="btn btn-primary btn-block" id="uploadButton" type="sumbit">Upload</button>
+
+      
       <br />
     
   
@@ -48,7 +54,10 @@
      let message = document.getElementById("message");
      let form = document.getElementById("form");
      let button = document.getElementById("uploadButton");
-     let urlLink = document.getElementById("urlLink")
+     let urlLinkBtn = document.getElementById("urlLink")
+    
+
+     loader.style.display = "none"
 
      form.addEventListener("submit", function(e){
       e.preventDefault();
@@ -58,7 +67,10 @@
       let label = document.getElementById("label1");
       let label2 = document.getElementById("label2");
       let Header = document.getElementById("head");
+      let checkbox = document.getElementById("checkSwitch");
 
+      let checkboxValue = checkbox.checked;
+      let checkboxlabel = document.getElementById("label");
          
 
       // check if user had selected a file
@@ -69,61 +81,90 @@
       else if(fileElement2.files.length === 0){
         alert('please choose some files')
         return
-        
       }
+     
       else{
         fileElement.style.display="none"
         fileElement2.style.display="none"
         label.style.display="none"
         label2.style.display="none"
         Header.innerHTML = "Files Uploading..." 
-
+        checkboxlabel.style.display="none"
+          checkbox.style.display="none"
       }
       
      
 
 
-      let files = Array.from(fileElement.files)
+      let files1 = Array.from(fileElement.files)
       let file2 = Array.from(fileElement2.files)
-  console.log(file2)
+  
+     
 
       let formData = new FormData();
 
-      files.forEach(file => {
+      files1.forEach(file => {
         formData.append('file', file);
-      })
-
+      });
+  
       file2.forEach(file=>{
         formData.append('file', file)
-      })
+      });
+
+      formData.append("newLineValue", checkboxValue); // This indicates whether the checkbox is on or off
+
+    console.log(formData);
+
+    for (var value of formData.values()) {
+   console.log(value); 
+}
       
       axios.post("http://localhost:3002/uploadFiles", formData, {
         onUploadProgress: progressEvent => {
           const percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           );
-          loader.innerHTML= "Upload process: " + percentCompleted + "%";
+          // loader.innerHTML= "Upload process: " + percentCompleted + "%";
+          loader.style.display="block";
+          button.style.display="none";
           console.log(`upload process: ${percentCompleted}%`);
         }
       })
         .then(res => {
           console.log(res.data);
-          message.innerHTML = res.data.message + `<br />`+ "<a class='btn btn-success btn-lg'href='"+res.data.urls+"'>Download </a>";
-          // message.style.backgroundColor="white"
-          message.style.color="green";
+          urlLinkBtn.innerHTML += `<br />`+ "<a class='btn btn-success btn-lg'href='"+res.data.urls+"'>Download </a>";
+          message.innerHTML = res.data.message 
+          console.log(res.data.message )
+          message.style.backgroundColor="white"
+          message.style.color="red"
           message.style.textAlign="center"
-          message.style.padding="20px"
+          message.style.padding="30px"
           message.style.borderRadius="5px"
-          Header.innerHTML="Files Upload Complete"
+          // Header.innerHTML="Files Upload Complete"
           button.style.display="none"
           loader.style.display="none"
 
-        //  urlLink.innerHTML += "<a href='"+res.data.urls+"'>Download File</a>";
-   
-         
-          console.log(res.data.urls);
+          ///check if upload was successfull 
+
+          if(res.data.status == false){
+            Header.innerHTML="Oops! Something Happend "
+            message.style.display ="block"
+            urlLinkBtn.style.display="none"
+            checkbox.style.display="none"
+            checkboxlabel.style.display="none"
+            console.log(res.status);
+            return
+        }else{
+          Header.innerHTML="Files Upload Complete"
+          message.style.display ="none"
+          checkbox.style.display="none"
+            checkboxlabel.style.display="none"
+            console.log(res.status);
+        }
         
-        })
+        });
+
+       
       }) 
    
 

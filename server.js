@@ -31,8 +31,9 @@ router.post("/uploadFiles", upload.fields([{ name: "file" }]), (ctx) => {
     (file) => `http://localhost:${PORT}/${file.originalname}`
   );
   ctx.body = {
-    message: ``, //message to client
-    urls
+    status: false,
+    message: `Failed to Upload`, //message to client
+    // urls
   };
 });
 
