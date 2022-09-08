@@ -4,6 +4,7 @@ const serve = require("koa-static");
 const Router = require("@koa/router");
 const multer = require("@koa/multer");
 const cors = require("@koa/cors");
+const { url } = require("inspector");
 
 const app = new Koa();
 const router = new Router();
@@ -28,11 +29,12 @@ router.get("/", async (ctx) => {
 
 router.post("/uploadFiles", upload.fields([{ name: "file" }]), (ctx) => {
   let urls = ctx.files.file.map(
-    (file) => `http://localhost:${PORT}/${file.originalname}`
+    (file) => `http://localhost:${PORT}/uploadFiles/${file.originalname}`
   );
   ctx.body = {
-    status: false,
-    message: `Failed to Upload`, //message to client
+    status: true,
+    message: `upload done`,
+    urls //message to client
     // urls
   };
 });
